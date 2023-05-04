@@ -1,4 +1,4 @@
-# TO DO APP 2.0 WITH SECURITY
+# TO DO APP 2.0
  
 ## How to configure
 
