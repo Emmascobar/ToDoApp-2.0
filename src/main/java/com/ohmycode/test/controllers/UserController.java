@@ -133,33 +133,23 @@ public class UserController {
             return "redirect:/add-task";
         }
         userService.addNewToDo(todo);
-        attributes.addFlashAttribute("success", "Task successfully registered in data base");
+        attributes.addFlashAttribute("success", "Task Successfully Registered / Updated In Database");
         return "redirect:/tasks";
     }
 
     @GetMapping("/update-form/{id}")
-    public ModelAndView updateForm(@PathVariable Long id, BindingResult result, RedirectAttributes attributes) {
-//        if (result.hasErrors()) {
-//            return "redirect:/tasks";
-//            attributes.addFlashAttribute("error", "You cant modificate another user task");
-//
-//        }
+    public ModelAndView updateForm(@PathVariable Long id, RedirectAttributes attributes) {
         ModelAndView model = new ModelAndView("Update_task");
         model.addObject("title", "Update Task");
         model.addObject("todo", toDoRepository.findById(id));
         model.addObject("users", userRepository.findAll());
-
         return model;
     }
 
     @GetMapping("/delete-task/{id}")
-    public String deleteTask(Authentication authentication, @PathVariable Long id, BindingResult result, RedirectAttributes attributes) {
-        userService.deleteToDo(authentication, id);
-        if (result.hasErrors()) {
-            attributes.addFlashAttribute("error", "You can't delete another user task");
-            return "redirect:/tasks";
-        }
-        attributes.addFlashAttribute("success", "Task deleted correctly");
+    public String deleteTask(@PathVariable Long id, RedirectAttributes attributes) {
+        userService.deleteToDo(id);
+        attributes.addFlashAttribute("warning", "Task Removed From Database");
         return "redirect:/tasks";
     }
 

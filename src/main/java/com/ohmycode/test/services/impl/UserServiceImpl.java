@@ -11,14 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -78,33 +76,33 @@ public class UserServiceImpl implements UserService {
         return toDoRepository.save(toDo);
     }
 
-    public void updateToDo(Authentication authentication, @RequestParam Long id) {
+    public void updateToDo(Long id) {
         Optional<ToDo> optionalToDo = toDoRepository.findById(id);
-        if (!authentication.getName().equals(optionalToDo.get().getUser().getUsername())) {
-            throw new RuntimeException("You cannot modificate another user tasks.");
-        } else {
-            optionalToDo.ifPresent(toDo -> toDo.setComplete(optionalToDo.get().isComplete()));
-            toDoRepository.save(optionalToDo.get());
-        }
+//        if (!authentication.getName().equals(optionalToDo.get().getUser().getUsername())) {
+//            throw new RuntimeException("You cannot modificate another user tasks.");
+//        } else {
+//            optionalToDo.ifPresent(toDo -> toDo.setComplete(optionalToDo.get().isComplete()));
+        toDoRepository.save(optionalToDo.get());
     }
-    public void deleteToDo(Authentication authentication, @RequestParam Long id) {
+
+    public void deleteToDo(Long id) {
         Optional<ToDo> optionalToDo = toDoRepository.findById(id);
-        if (!authentication.getName().equals(optionalToDo.get().getUser().getUsername())) {
-            throw new RuntimeException("You cannot delete another user tasks.");
-        } else {
-            toDoRepository.deleteById(id);
-        }
+//        if (!authentication.getName().equals(optionalToDo.get().getUser().getUsername())) {
+//            throw new RuntimeException("You cannot delete another user tasks.");
+//        } else {
+        toDoRepository.deleteById(id);
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid Credentials");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(), mapAuthorities((Collection<Role>) user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapAuthorities((Collection<Role>) user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> mapAuthorities(Collection<Role> roles){
+    private Collection<? extends GrantedAuthority> mapAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }
