@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${title}"></title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="@{users/index}">OhMyCode!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active"><a class="nav-link" href="@{users/index}">Home
+                <span class="sr-only">(current)</span>
+            </a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/tasks}">Tasks to do</a>
+            </li>
+            <li class="nav-item active"><a class="nav-link" href="#">Admin Access
+                <span class="sr-only">(current)</span>
+            </a></li>
+        </ul>
+    </div>
+</nav>
+<div class="d-flex p-5 flex-column align-items-center justify-content-center">
+    <form th:action="@{/tasks/add}" method="post" class="w-50">
+        <div class="mb-3">
+            <label for="task" class="form-label">Task:</label>
+            <input type="text" class="form-control" id="task">
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Asigned to:</label>
+            <input type="text" class="form-control" id="username">
+        </div>
+        <div class=" mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="complete">
+            <label class="form-check-label mr-5" for="complete">Complete</label>
+            <input type="checkbox" class="form-check-input" id="not-complete">
+            <label class="form-check-label" for="not-complete">Not complete</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

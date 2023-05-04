@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${title}"></title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="@{users/index}">OhMyCode! - ToDoApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active"><a class="nav-link" href="@{/index}">Home
+                <span class="sr-only">(current)</span>
+            </a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/tasks}">Tasks to do</a>
+            </li>
+        </ul>
+    </div>
+    <form class="d-flex" role="acces_user">
+        <button class="btn btn-primary text-white"><a th:href="@{/user-form}" style="color:white">Add User</a></button>
+    </form>
+</nav>
+
+<div class="alert alert-success alert-dismissible" th:if="${success != null}">
+    <label th:text="${success}"></label>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+<div class="alert alert-danger alert-dismissible" th:if="${error != null}">
+    <label th:text="${error}"></label>
+    <button type="button" data-dismiss="alert">&times;</button>
+</div>
+<div class="alert alert-warning alert-dismissible" th:if="${warning != null}">
+    <label th:text="${warning}"></label>
+    <button type="button" data-dismiss="alert">&times;</button>
+</div>
+
+<div class="container p-5">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h3 class="text-center p-3"> Add New Task</h3>
+            <div class="card-body">
+                <form th:action="@{/save-task}" th:object="${todo}" method="post">
+                    <div class="form-group mb-4">
+                        <label for="id" class="form-label">Id:</label>
+                        <input class="form-control" id="id" th:field="*{id}" rows="3" readonly="readonly">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="user">Assigned to new User:</label>
+                        <select class="form-select form-select-sm p-2 w-100" th:field="*{user}">
+                            <option th:each="user : ${users}" id="user" th:value="${user.id}" th:text="${user.username}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="title" class="form-label">Task:</label>
+                        <textarea class="form-control" id="title" th:field="*{title}" rows="3" placeholder="Max length 200 characters" required></textarea>
+                    </div>
+                    <div class=" mb-3 form-check">
+                        <input class="form-check-input" id="isComplete" type="radio" name="isComplete" th:field="*{complete}" th:value="true">
+                        <label class="form-check-label mr-5" for="isComplete">
+                            Complete
+                        </label>
+                        <br>
+                        <input class="form-check-input" type="radio" name="complete" id="complete" th:field="*{complete}" th:value="false">
+                        <label class="form-check-label mr-5" for="complete">
+                            Not complete
+                        </label>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Add Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
