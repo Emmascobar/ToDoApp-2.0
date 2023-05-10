@@ -9,14 +9,14 @@
 3) The Controller routes can be used and tested using templates provide by Thymeleaf (normally port 8080 on localhost), although also can be use other HTTP request and test programme. 
 
 ## Routes:
-- localhost:8080/index : Homepage.
-- localhost:8080/tasks :  view all tasks list. In this page you can be able also search, update or delete an existing task.
-- localhost:8080/add-task : view the form to add a new task in database.
-- localhost:8080/update-form/{id} : view an exist task to modificate it.
-- localhost:8080/user-form : view the form to add a new user in database.
+- /index : Homepage.
+- /tasks :  view all tasks list. In this page you can be able also search, update or delete an existing task.
+- /add-task : view the form to add a new task in database.
+- /update-form/{id} : view an exist task to modificate it.
+- /user-form : view the form to add a new user in database.
 
 ## Security: 
-- Except the routes "/index" and "/user-form". the rest of routes are protected by Springboot security, so you need Sign In to ADD, MODIFICATE or DELETE a task. And only tasks of the user authenticated at this moment can be able to modificate.
+- Except the routes "/index" and "/user-form". the rest of routes are protected by Springboot security, so you need Sign In to ADD, MODIFICATE or DELETE a task. And only the tasks of the user authenticated at that moment can be able to modificate.
 
 ## Specifications
 With the correct use of TO DO APP, you will be able to:
